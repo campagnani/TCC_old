@@ -1,0 +1,26 @@
+PIN	FUNC	DISP	COR			PIN	FUNC	DISP	COR
+	
+1-	3v3	Tudo	Vermelho		2-	Vcc	Enc 	Vermelho
+3-	SDA	I2c	Amarelo			4-	Vcc	Cooler	Vermelho
+5-	SCL	I2c	Laranja			6-	Gnd	Cooler	Preto
+7-	Inter	MPU	Verde			8-	
+9-	Gnd	Tudo	Marrom			10-	
+11-						12-	
+13-	ALERT	1115	Roxo			14-	Gnd	Enc	Marrom
+15-	Sinal	Enc	Laranja			16-	PWM	PH_tra	Laranja
+17-						18-	PWM	PH_tra	Amarelo
+19-						20-
+21-						22-
+23-						24-
+25-						26-
+27-						28-
+29-						30-
+31-						32-	PWM	PH_dia	Verde
+33-	PWM	PH_dia	Azul			34-
+35-						36-
+37-						38-
+39-						40-
+
+
+
+https://pinout.xyz
