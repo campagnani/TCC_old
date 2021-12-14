@@ -46,7 +46,7 @@ pin_encoder = 22
 pulse_counter = 0
 tempo_amostragem = 0.01
 tempo_amostragem2 = 0.001
-tempo_amostragem_tabela = 0.1
+tempo_amostragem_tabela = 0.01
 iErro = 0
 erroAnterior = 0
 anti_windup = 0
@@ -57,7 +57,9 @@ erroAnterior_vel = 0
 kp=0
 kd=0
 zm=0
+reset = False
 
+arquivo = open("./tabela", "w")
 
 
 """ Funcoes """
@@ -158,10 +160,12 @@ def mede_inclinacao():
 
 
 def controlador_velocidade():
-    global ref_velocidade
     global iErro_vel
+    global dErro
     global erroAnterior_vel
-
+    coisa = threading.Timer(tempo_amostragem,controlador_velocidade)
+    if not reset:
+        coisa.start()
     velocidade = mede_velocidade(tempo_amostragem)
     kp=500
     kd=0
@@ -180,7 +184,7 @@ def controlador_velocidade():
     Sc = kp*erroAtual #+ kd*dErro# + ki*iErro 
     PHT(Sc)
     #print(str(Sc)+"\t"+str(velocidade))
-    threading.Timer(tempo_amostragem,controlador_velocidade).start()
+    
 
 
 
@@ -199,6 +203,7 @@ def controlador_volante():
     global ScA
     global kp #kp=10
     global kd #kd=0
+
     ki=0
     kw=0
 
@@ -226,16 +231,18 @@ def controlador_volante():
 
     #anti_windup
     #anti_windup = ScA - Sc
-    Sc_Md = PHD(Sc)    
-    threading.Timer(tempo_amostragem2,controlador_volante).start()
+    Sc_Md = PHD(Sc)
+    #print(time.time())
+    coisa = threading.Timer(tempo_amostragem2,controlador_volante)
+    if not reset:
+        coisa.start()
+    
 
 
 
 
 
 def controlador_pendulo():
-    global Sc_Sm    #Sinal de Controle - Servo Motor
-    global inclincacao
     inclincacao = mede_inclinacao()
     print(inclincacao)
     threading.Timer(tempo_amostragem2,controlador_pendulo).start()
@@ -244,20 +251,8 @@ def controlador_pendulo():
 
 
 def imprime_tabela():
-    #Referencias
-    global ref_velocidade
-    global ref_direcao
-    #Sinais de Controle
-    global Sc_Mt    #Sinal de Controle - Motor Traseiro
-    global Sc_Sm    #Sinal de Controle - Servo Motor
-    global Sc_Md    #Sinal de Controle - Motor Dianteiro
-    #Sensores
-    global velocidade   #Velocidade - Encoder
-    global inclincacao  #Inclinação - MPU
-    global direcao      #Direção    - Portenciometro
-    #Print
-    print( str(round(ref_direcao,1)) + "\t" + str(round(direcao,1)) + "\t" + str(round(Sc_Md,1)) + "\t" + str(round(kp,0)) + "\t" + str(round(kd,2)) + "\t" + str(round(zm,0)) )
-    #Thread
+    global arquivo
+    arquivo.write(str(round(ref_direcao,1)) + "\t" + str(round(direcao,1)) + "\t" + str(round(Sc_Md,1)) + "\t" + str(round(kp,0)) + "\t" + str(round(kd,2)) + "\t" + str(round(zm,0)) + "\n")
     threading.Timer(tempo_amostragem_tabela,imprime_tabela).start()
 
 
@@ -266,7 +261,7 @@ def imprime_tabela():
 
 
 def motord_manual():
-    direcao = PHD(ref_direcao*10)
+    #direcao = PHD(ref_direcao*10)
     threading.Timer(tempo_amostragem_tabela,motord_manual).start()
 
 
@@ -284,12 +279,15 @@ class MyController(Controller):
     #Digitais
 
     def on_x_press(self):
+        reset = False
         controlador_velocidade()
 
     def on_square_press(self):
+        reset = False
         controlador_volante()
 
     def on_triangle_press(self):
+        reset = False
         controlador_pendulo()
 
     def on_playstation_button_press(self):
@@ -297,12 +295,12 @@ class MyController(Controller):
         global pwm1
         global pwm2 
         global pwm3
+        global reset
+        reset = True
         pwm0.stop()
         pwm1.stop()
         pwm2.stop()
         pwm3.stop()
-        GPIO.cleanup()
-        sys.exit()
 
 
     #Analogicos
