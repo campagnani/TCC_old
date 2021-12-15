@@ -46,7 +46,7 @@ class MyController(Controller):
 """ Compila Controladores """
 comp_velocidade = Popen(['g++','velocidade.cpp','-lpigpio','-o','velocidade.bin'], stdin=PIPE, bufsize=5)
 comp_velocidade.wait()
-comp_pendulo = Popen(['g++','pendulo.cpp','-lpigpio','-o','pendulo.bin'], stdin=PIPE, bufsize=5)
+comp_pendulo = Popen(['g++','pendulo.cpp','-lpigpio','-lwiringPi','-o','pendulo.bin'], stdin=PIPE, bufsize=5)
 comp_pendulo.wait()
 
 """Executa Controladores """
