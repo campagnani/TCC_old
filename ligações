@@ -23,4 +23,6 @@ PIN	FUNC	DISP	COR			PIN	FUNC	DISP	COR
 
 
 
-https://pinout.xyz
+GPIO: https://pinout.xyz
+
+OBS: Ativar PULL_UP interno no pino 15 (GPIO 22)

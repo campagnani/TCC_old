@@ -42,7 +42,7 @@ ref_velocidade=0  #Referência de velocidade oriunda do controle de PS4
 inclincacao=0
 aceleracao=0
 direcao = 0
-pin_encoder = 22
+pin_encoder = 10#22
 pulse_counter = 0
 tempo_amostragem = 0.01
 tempo_amostragem2 = 0.001
@@ -253,6 +253,7 @@ def controlador_pendulo():
 def imprime_tabela():
     global arquivo
     arquivo.write(str(round(ref_direcao,1)) + "\t" + str(round(direcao,1)) + "\t" + str(round(Sc_Md,1)) + "\t" + str(round(kp,0)) + "\t" + str(round(kd,2)) + "\t" + str(round(zm,0)) + "\n")
+    print(str(round(ref_direcao,1)) + "\t" + str(round(direcao,1)) + "\t" + str(round(Sc_Md,1)) + "\t" + str(round(kp,0)) + "\t" + str(round(kd,2)) + "\t" + str(round(zm,0)))
     threading.Timer(tempo_amostragem_tabela,imprime_tabela).start()
 
 
