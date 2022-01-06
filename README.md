@@ -10,8 +10,8 @@ A proposta deste trabalho de conclusão de curso é modelar e controlar a inclin
 
 docs: Documentos no formato LaTex. Para compilação em PDF vá em releases.
 
-src: Código atual sendo desenvolvido em Python e C++.
+src: Código atual da planta sendo desenvolvido em Python e C++.
 
-src_old: Código antigo que foi desenvolvido apenas em Python.
+src_old: Código antigo da planta que foi desenvolvido apenas em Python.
 
-testes: Arquivos de resultados experimentais, entre outros.
+matlab: Códigos de simulações desenvolvidadas matlab-simulink além de arquivos de resultados experimentais, resultados de simulações, gráficos, entre outros.
