@@ -1,0 +1,17 @@
+Partindo da funcao de trasferencia XXX	(VIDE: pasta dados_velocidade_malhaaberta) foi realizado a simulação XXX onde foi possivel identificar a dinâmica de saturação.
+
+O resultado foi XXX para variar 10% o ponto de operação.
+
+A dinamica desejada então do controlador foi estabelecida de XXX, a fim de evitar saturação do atuador.
+
+Foi estabelecido que o controlador será do tipo PI devido XXX.
+
+Foi sintetizado o controlador XXX do método XXX.
+
+Foi simulado o controlador aplicado a planta no arquivo XXX.
+
+O Resultado da simulação foi XXX.
+
+O controlador foi aplicado na planta e os resultados estão disponiveis na pasta dados_velocidade_malhafechada.
+
+O resultado experimental foi XXX.

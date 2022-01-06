@@ -1,0 +1,8 @@
+gravidade: 10 m/s
+distancia entre eixos: 0.140 m
+distancia do centro de gravidade: 0.030 m 
+altura do centro de gravidade: 0.130 m 
+velocidade (referência): 1 m/s
+
+função de transferencia arbitrária modelada: I(s) = (v/d_e)*(d_c*s+v)/(h*s^2-g) = (v*d_c*s/d_e+v^2/d_e)/(h*s^2-g)
+
