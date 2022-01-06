@@ -11,11 +11,20 @@ ref_direcao = 0
 processo_controladores = 0
 i = 0
 
-def envia_referencia():
-    global i
-    i = int(ref_velocidade*1000)
+def concatena_ref(ref):
+    i= int(ref*1000)
     if(i>1000):
         i=1000
+    if(i<-1000):
+        i=-1000
+    if(i>=0):
+        i += 10000
+    if(i<0):
+        i = -i + 20000
+    return i
+
+def envia_referencia():
+    i = concatena_ref(ref_velocidade)
     processo_controladores.stdin.write(f"{i:#05d}".encode())
     processo_controladores.stdin.flush()
     threading.Timer(0.1,envia_referencia).start()
@@ -84,7 +93,7 @@ class MyController(Controller):
 
     def on_L3_down(self, value):
         global ref_velocidade
-        ref_velocidade = 0
+        ref_velocidade = -value/32767
 
     def on_L3_y_at_rest(self):
         global ref_velocidade
@@ -92,6 +101,19 @@ class MyController(Controller):
 
     def on_L3_press(self):
         i
+    
+    def on_left_arrow_press(self):
+        global ref_velocidade
+        ref_velocidade = 0
+    def on_right_arrow_press(self):
+        global ref_velocidade
+        ref_velocidade = 0.5
+    def on_up_arrow_press(self):
+        global ref_velocidade
+        ref_velocidade = 0.6
+    def on_down_arrow_press(self):
+        global ref_velocidade
+        ref_velocidade = 0.4
         
 
 
