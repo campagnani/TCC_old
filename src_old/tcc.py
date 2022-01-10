@@ -5,6 +5,7 @@ from time import sleep
 import time
 import threading
 import RPi.GPIO as GPIO
+import sweep
 
 #Controle PS4
 from pyPS4Controller.controller import Controller
@@ -259,11 +260,13 @@ def imprime_tabela():
 
 
 
-
+w=0
 tinicial=0
 def motord_manual():
     global arquivo
     direcao = mede_volante()
+    w=w+1
+    ref_direcao = sweep[w]
     PHD(ref_direcao*10)
     arquivo.write(str(ref_direcao*0.7)+"\t"+str(direcao)+"\t"+str(time.time()-tinicial)+";\n")
     threading.Timer(0.007,motord_manual).start()
