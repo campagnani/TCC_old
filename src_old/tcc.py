@@ -45,7 +45,7 @@ direcao = 0
 pin_encoder = 10#22
 pulse_counter = 0
 tempo_amostragem = 0.01
-tempo_amostragem2 = 0.001
+tempo_amostragem2 = 0.009
 tempo_amostragem_tabela = 0.01
 iErro = 0
 erroAnterior = 0
@@ -260,10 +260,13 @@ def imprime_tabela():
 
 
 
-
+tinicial=0
 def motord_manual():
-    #direcao = PHD(ref_direcao*10)
-    threading.Timer(tempo_amostragem_tabela,motord_manual).start()
+    global arquivo
+    direcao = mede_volante()
+    PHD(ref_direcao*10)
+    arquivo.write(str(ref_direcao*0.7)+"\t"+str(direcao)+"\t"+str(time.time()-tinicial)+";\n")
+    threading.Timer(0.007,motord_manual).start()
 
 
 
@@ -324,10 +327,12 @@ class MyController(Controller):
         ok
 
     def on_R3_y_at_rest(self):
-        motord_manual()
+        ok
 
     def on_R3_press(self):
-        ok
+        global tinicial
+        tinicial = time.time()
+        motord_manual()
 
     def on_L3_left(self, value):
         ok
@@ -362,12 +367,24 @@ class MyController(Controller):
     def on_down_arrow_press(self):
         global kp
         kp -= 1
+        '''
     def on_left_arrow_press(self):
         global kd
         kd -= 0.1
     def on_right_arrow_press(self):
         global kd
         kd += 0.01
+        '''
+    def on_left_arrow_press(self):
+        global ref_direcao
+        ref_direcao = 10
+    def on_right_arrow_press(self):
+        global ref_direcao
+        ref_direcao = -10
+    def on_left_right_arrow_release(self):
+        global ref_direcao
+        ref_direcao = 0
+    
     def on_R1_press(self):
         global zm
         zm += 1
