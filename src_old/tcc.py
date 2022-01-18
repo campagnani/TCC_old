@@ -262,12 +262,14 @@ def imprime_tabela():
 
 w=0
 tinicial=0
+
 def motord_manual():
     global arquivo
+    global w
     direcao = mede_volante()
-    w=w+1
-    ref_direcao = sweep[w]
-    PHD(ref_direcao*10)
+    ref_direcao = sweep.sweepwave(w)
+    w=w+10
+    PHD(ref_direcao*100/7)
     arquivo.write(str(ref_direcao*0.7)+"\t"+str(direcao)+"\t"+str(time.time()-tinicial)+";\n")
     threading.Timer(0.007,motord_manual).start()
 
@@ -426,7 +428,7 @@ pwm3.start(0)
 
 
 
-
+'''
 """MPU"""
 i2c_bus = 1
 device_address = 0x68
@@ -450,7 +452,7 @@ FIFO_count = mpu.get_FIFO_count()
 FIFO_buffer = [0]*64
 FIFO_count_list = list()
 
-
+'''
 
 
 

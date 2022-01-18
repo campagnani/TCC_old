@@ -8,14 +8,19 @@
 #define pin_pwm_tra  23
 #define pin_pwm_tra2 24
 
-#define tax_amo 100
+#define tax_amo 50
+
+#define kp  149.7939
+#define ki 1018.8284
+
+
 
 int contador = 0;
 
 double referencia=0;
 double velocidade=0;
 double Sc=0;
-
+double Scs=0; //Sinal de controle saturado
 
 
 void conte (int, int, uint32_t)
@@ -70,8 +75,23 @@ double PHT(double duty)
 void controlador_velocidade()
 {
     velocidade = mede_velocidade();
+	double erro = referencia - velocidade;
+	static double erro_i = 0;
+	erro_i += erro*(tax_amo/1000);
+	double Scp=erro*kp;
+	double Sci=erro_i*ki;
+	if(Sci >  24) Sci =  24;
+	if(Sci < -24) Sci = -24;
+	Sc = Scp + Sci;
+	Scs = PHT(Sc);
 }
 
+void parado()
+{
+	referencia=-1;//Off
+	velocidade = mede_velocidade();
+	Scs=PHT(0);
+}
 
 void sinal_direto()
 {
@@ -94,6 +114,10 @@ bool recebe_dado()
 
 		switch (bytes[0])
 		{
+			case '3':
+				parado();
+			break;
+
 			case '2': //Referencia Negativa + Sinal Direto
 				referencia = -( (double)
 				//(bytes[0] - '0') * 10000 +
@@ -178,7 +202,7 @@ int main()
 		if(recebe_dado()) break;
 		std::this_thread::sleep_until(t_inicial + std::chrono::milliseconds(tax_amo));
 		auto t_atual = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - start);
-		std::cout << referencia << "\t" << velocidade << "\t" << Sc << "\t" << t_atual.count() << std::endl;
+		std::cout << referencia << "\t" << velocidade << "\t" << Scs << "\t" << t_atual.count() << std::endl;
 	}
 	//Finaliza execução
 	gpioPWM(pin_pwm_tra, 0);

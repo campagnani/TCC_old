@@ -6,12 +6,13 @@ import threading
 from subprocess import Popen, PIPE
 from pyPS4Controller.controller import Controller
 
-ref_velocidade = 0
+tax_amo = 0.05
+ref_velocidade = -1
 ref_direcao = 0
 processo_controladores = 0
 i = 0
 
-def concatena_ref(ref):
+def concatena_ref_sinal_direto(ref):
     i= int(ref*1000)
     if(i>1000):
         i=1000
@@ -23,11 +24,19 @@ def concatena_ref(ref):
         i = -i + 20000
     return i
 
+def concatena_ref_controlador(ref):
+    i= int(ref*1000)
+    if(i>5000):
+        i=5000
+    if(i<0):
+        i=30000
+    return i
+
 def envia_referencia():
-    i = concatena_ref(ref_velocidade)
+    i = concatena_ref_controlador(ref_velocidade)
     processo_controladores.stdin.write(f"{i:#05d}".encode())
     processo_controladores.stdin.flush()
-    threading.Timer(0.1,envia_referencia).start()
+    threading.Timer(tax_amo,envia_referencia).start()
 
 
 
@@ -89,11 +98,11 @@ class MyController(Controller):
     
     def on_L3_up(self, value):
         global ref_velocidade
-        ref_velocidade = -value/32767
+        ref_velocidade = -value/32767*3
 
     def on_L3_down(self, value):
         global ref_velocidade
-        ref_velocidade = -value/32767
+        ref_velocidade = -1#-value/32767
 
     def on_L3_y_at_rest(self):
         global ref_velocidade
@@ -104,16 +113,16 @@ class MyController(Controller):
     
     def on_left_arrow_press(self):
         global ref_velocidade
-        ref_velocidade = 0
+        ref_velocidade = -1
     def on_right_arrow_press(self):
         global ref_velocidade
-        ref_velocidade = 0.5
+        ref_velocidade = 2.35
     def on_up_arrow_press(self):
         global ref_velocidade
-        ref_velocidade = 0.6
+        ref_velocidade = 2.5
     def on_down_arrow_press(self):
         global ref_velocidade
-        ref_velocidade = 0.4
+        ref_velocidade = 2
         
 
 
