@@ -21,4 +21,4 @@ teste14(:,4) = (teste14(:,4)-teste14(1,4))/1000;
 teste15(:,4) = (teste15(:,4)-teste15(1,4))/1000;
 teste16(:,4) = (teste16(:,4)-teste16(1,4))/1000;
 
-save('dados_velocidade.mat')
+save('dados_corrigidos.mat')
