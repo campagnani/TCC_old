@@ -1,6 +1,8 @@
 # TCC de Engenharia Mecatrônica / CEFET-MG
 
-Arquivos do Trabalho de Conclusão de Curso do discente Thalles Oliveira Campagnani, do curso de Engenharia Mecatrônica, do Centro Federal de Educação Tecnológica de Minas Gerais.
+Arquivos do Trabalho de Conclusão de Curso 1 e do início do desenvolvimento do Trabalho de Conclusão de Curso 2 do discente Thalles Oliveira Campagnani, do curso de Engenharia Mecatrônica, do Centro Federal de Educação Tecnológica de Minas Gerais.
+
+AVISO: Este TCC não foi finalizado e publicado devido ao processo de aproveitamento de estudos da publição do artigo [Arranjo Cliente Servidor para um Robô Industrial com Controladora Aberta](https://github.com/campagnani/Artigo-Open-SBAI) onde ocorreu uma mudança de tema e de orientador de TCC.
 
 ## Introdução
 
