@@ -17,3 +17,7 @@ src: Código atual da planta sendo desenvolvido em Python e C++.
 src_old: Código antigo da planta que foi desenvolvido apenas em Python.
 
 matlab: Códigos de simulações desenvolvidadas matlab-simulink além de arquivos de resultados experimentais, resultados de simulações, gráficos, entre outros.
+
+## Apresentação
+
+A apresentação de TCC1 com os comentarios da banca pode ser assistida neste [link](https://youtu.be/8JhuzwMy3Dk) no meu canal do YouTube.
